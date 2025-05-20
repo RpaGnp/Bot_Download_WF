@@ -208,13 +208,11 @@ class GoogleSearchBot:
             EC.element_to_be_clickable((By.XPATH, "//button[@title='Vista' and @aria-label='Vista']"))
         )
         # Haz clic en el botón "Vista"
-        self.driver.save_screenshot('./screenshot.png')
         vista_button.click()
 
         checkbox = WebDriverWait(self.driver, 30).until(
             EC.element_to_be_clickable((By.XPATH, '/html/body/div[26]/div/div/div/div[1]/form/div/div[3]/oj-checkboxset'))
         )
-        self.driver.save_screenshot('./screenshot.png')
         checkbox.click()
 
         # Encuentra el contenedor principal
@@ -222,7 +220,6 @@ class GoogleSearchBot:
             EC.presence_of_element_located((By.XPATH, '/html/body/div[26]/div/div/div/div[2]'))
         )
 
-        self.driver.save_screenshot('./screenshot.png')
         container.click()
 
         if 'Windows' in platform():
@@ -230,7 +227,6 @@ class GoogleSearchBot:
         else:
             button = container.find_element(By.CSS_SELECTOR, ".app-button--cta")  # Target the 'Aplicar' button
             
-        self.driver.save_screenshot('./screenshot.png')
         button.click()
         print("Successfully clicked the 'Aplicar' button!")
 
@@ -254,7 +250,6 @@ class GoogleSearchBot:
                     EC.presence_of_element_located((By.XPATH, path))
                 )
                 region_text = apply_button.text
-                self.driver.save_screenshot('./screenshot.png')
 
                 if region_text in lista_regiones:
                     apply_button.click()
@@ -287,20 +282,17 @@ class GoogleSearchBot:
                                     acciones_button = WebDriverWait(self.driver, 30).until(
                                         EC.element_to_be_clickable((By.XPATH, "//button[@title='Acciones' and @aria-label='Acciones']"))
                                     )
-                                    self.driver.save_screenshot('./screenshot.png')
                                     acciones_button.click()
 
                                     exportar = WebDriverWait(self.driver, 30).until(
                                         EC.element_to_be_clickable((By.XPATH, '/html/body/div[26]/div/div/button[2]'))
                                     )
-                                    self.driver.save_screenshot('./screenshot.png')
                                     exportar.click()
                                     attempts = 0
                                     while not self.archivos_descargados(region_text, date_str):
                                         print('entra a buscar...')
                                         attempts += 1
                                         if attempts > 60 : return False
-                                        # self.driver.save_screenshot('./screenshot.png')
                                         time.sleep(1)
                                     break
 

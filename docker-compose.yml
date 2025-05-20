@@ -1,39 +1,35 @@
-version: "3.8"
+version: "3"
 
 services:
   bot:
     build: .
-    container_name: python_bot
+    container_name: bot_download_wf
     environment:
-      - CHROME_HOST=bot_chrome
+      - CHROME_HOST=bot_download_wf_chrome
       - USER=45522077
       - PSW=Le@onv35/*
     volumes:
       - ./app:/app
       - ./Downloads:/app/Downloads
     depends_on:
-      - bot_chrome
+      - bot_download_wf_chrome
     networks:
       - selenium_net
-    restart: unless-stopped
 
-  bot_chrome:
+  bot_download_wf_chrome:
     image: selenium/standalone-chrome
-    container_name: bot_chrome
-    shm_size: 2gb
+    container_name: bot_download_wf_chrome
     volumes:
       - /dev/shm:/dev/shm
-      - ./Downloads:/home/seluser/Downloads
+      - ./Downloads:/home/seluser/Downloads     
     ports:
-      - "4444:4444"
-      - "7900:7900"
+      - "4472:4444"  # Puerto para Selenium
+      - "7927:7900"  # Puerto para VNC
+      - "9249:9222"  # Puerto para DevTools
     environment:
       - SE_VNC_NO_PASSWORD=1
-      - SE_NODE_MAX_SESSIONS=1
-      - SE_NODE_OVERRIDE_MAX_SESSIONS=true
     networks:
       - selenium_net
-    restart: unless-stopped
 
 networks:
   selenium_net:
