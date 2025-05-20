@@ -1,0 +1,36 @@
+version: "3"
+
+services:
+  bot:
+    build: .
+    container_name: python_bot
+    environment:
+      - CHROME_HOST=bot_chrome
+      - USER=45049074
+      - PSW=Data2025.**
+    volumes:
+      - ./app:/app
+      - ./Downloads:/app/Downloads
+    depends_on:
+      - bot_chrome
+    networks:
+      - selenium_net
+
+  bot_chrome:
+    image: selenium/standalone-chrome
+    container_name: bot_chrome
+    volumes:
+      - /dev/shm:/dev/shm
+      - ./Downloads:/home/seluser/Downloads     
+    ports:
+      - "4444:4444"
+      - "7900:7900"
+      - "9222:9222"
+    environment:
+      - SE_VNC_NO_PASSWORD=1
+    networks:
+      - selenium_net
+
+networks:
+  selenium_net:
+    driver: bridge
