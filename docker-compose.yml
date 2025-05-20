@@ -1,4 +1,4 @@
-version: "3"
+version: "3.8"
 
 services:
   bot:
@@ -15,21 +15,25 @@ services:
       - bot_chrome
     networks:
       - selenium_net
+    restart: unless-stopped
 
   bot_chrome:
     image: selenium/standalone-chrome
     container_name: bot_chrome
+    shm_size: 2gb
     volumes:
       - /dev/shm:/dev/shm
-      - ./Downloads:/home/seluser/Downloads     
+      - ./Downloads:/home/seluser/Downloads
     ports:
       - "4444:4444"
       - "7900:7900"
-      - "9222:9222"
     environment:
       - SE_VNC_NO_PASSWORD=1
+      - SE_NODE_MAX_SESSIONS=1
+      - SE_NODE_OVERRIDE_MAX_SESSIONS=true
     networks:
       - selenium_net
+    restart: unless-stopped
 
 networks:
   selenium_net:
