@@ -6,8 +6,8 @@ services:
     container_name: python_bot
     environment:
       - CHROME_HOST=bot_chrome
-      - USER=45049074
-      - PSW=Data2025.**
+      - USER=45522077
+      - PSW=Le@onv35/*
     volumes:
       - ./app:/app
       - ./Downloads:/app/Downloads
